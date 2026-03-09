@@ -32,7 +32,7 @@ export default function LoginScreen() {
       <View className="flex-1 px-5 pt-6">
 
         {/* horní ilustrace */}
-        <View className="items-center">
+        <View className="items-center mt-10">
           <Image
             source={require("../../assets/coop.png")}
             className="h-40 w-full"
