@@ -18,8 +18,8 @@ Mobile app for tracking egg production from backyard chickens.
 |------|------|
 | ![](screenshots/calendar.png) | ![](screenshots/add-eggs.png) |
 
-| Statistics |
-|------|
+| Statistics | Stats + Trends|
+|------|------|
 | ![](screenshots/stats1.png) | ![](screenshots/stats3.png) |
 
 ---
