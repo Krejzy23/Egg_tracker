@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 
 import HomeScreen from "../screens/HomeScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 import CalendarScreen from "../screens/CalendarScreen";
 import StatsScreen from "../screens/StatsScreen";
 import AddEggsScreen from "../screens/AddEggsScreen";
@@ -88,6 +89,16 @@ function AuthenticatedApp() {
         component={AddEggsScreen}
         options={{
           title: "Záznam vajec",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "#fafafa" },
+          headerTitleStyle: { fontWeight: "700" },
+        }}
+      />
+      <RootStack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: "Nastavení",
           headerShadowVisible: false,
           headerStyle: { backgroundColor: "#fafafa" },
           headerTitleStyle: { fontWeight: "700" },

@@ -7,6 +7,7 @@ import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { RootTabParamList, RootStackParamList } from "../types/navigation";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Ionicons } from "@expo/vector-icons";
 
 type Props = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, "Home">,
@@ -34,11 +35,20 @@ export default function HomeScreen({ navigation }: Props) {
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
       <View className="flex-1 px-5 pt-4 pb-24">
-        <View className="mb-6">
-          <Text className="text-3xl font-bold text-zinc-900">Můj kurník</Text>
-          <Text className="mt-2 text-base text-zinc-500">
-            Přehled slepic a dnešní snůšky
-          </Text>
+        <View className="mb-6 flex-row items-start justify-between">
+          <View className="flex-1 pr-4">
+            <Text className="text-3xl font-bold text-zinc-900">Můj kurník</Text>
+            <Text className="mt-2 text-base text-zinc-500">
+              Přehled slepic a dnešní snůšky
+            </Text>
+          </View>
+
+          <Pressable
+            onPress={() => navigation.navigate("Settings")}
+            className="rounded-2xl bg-white p-3 shadow-lg"
+          >
+            <Ionicons name="settings-outline" size={22} color="#18181b" />
+          </Pressable>
         </View>
 
         <View className="rounded-[28px] bg-amber-50 px-5 py-5 shadow-lg">

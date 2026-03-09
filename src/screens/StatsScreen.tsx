@@ -10,7 +10,6 @@ import { useState } from "react";
 import { useEggEntries } from "../context/EggEntriesContext";
 import { LineChart, BarChart } from "react-native-chart-kit";
 
-import { exportEggEntriesToCsv } from "../features/stats/statsExport";
 import {
   getTrendType,
   formatWeekLabel,
@@ -72,15 +71,6 @@ export default function StatsScreen() {
                 Přehled produkce vajec
               </Text>
             </View>
-
-            <Pressable
-              onPress={() => exportEggEntriesToCsv(eggEntries)}
-              className="rounded-2xl bg-emerald-600 px-4 py-3"
-            >
-              <Text className="text-sm font-semibold text-white">
-                Export CSV
-              </Text>
-            </Pressable>
           </View>
 
           {/* Přepínač filtru */}

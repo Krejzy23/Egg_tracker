@@ -11,4 +11,5 @@ export type CalendarStackParamList = {
 export type RootStackParamList = {
   Tabs: undefined;
   AddEggs: { date: string };
+  Settings: undefined;
 };
