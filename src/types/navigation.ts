@@ -1,3 +1,5 @@
+import type { NavigatorScreenParams } from "@react-navigation/native";
+
 export type RootTabParamList = {
   Home: undefined;
   CalendarTab: undefined;
@@ -9,7 +11,7 @@ export type CalendarStackParamList = {
 };
 
 export type RootStackParamList = {
-  Tabs: undefined;
+  Tabs: NavigatorScreenParams<RootTabParamList>;
   AddEggs: { date: string };
   Settings: undefined;
 };

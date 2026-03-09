@@ -34,22 +34,31 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-1 px-5 pt-6">
-
+      <View className="flex-1 px-5 pt-3">
         {/* horní ilustrace */}
-        <View className="items-center mt-10">
-          <Image
-            source={require("../../assets/coop.png")}
-            className="h-56 w-full"
-            resizeMode="contain"
-          />
+        <View className="mt-4">
+          <View className="flex flex-row">
+            <Image
+              source={require("../../assets/chicken_log2.png")}
+              className="h-16 w-16 mt-32"
+              resizeMode="contain"
+            />
+            <Image
+              source={require("../../assets/coop.png")}
+              className="h-56 w-56 mt-5"
+              resizeMode="contain"
+            />
+            <Image
+              source={require("../../assets/chicken_log.png")}
+              className="h-32 w-32 mt-32"
+              resizeMode="contain"
+            />
+          </View>
         </View>
 
         {/* nadpis */}
         <View className="mt-4 mb-6">
-          <Text className="text-3xl font-bold text-zinc-900">
-            Egg Tracker
-          </Text>
+          <Text className="text-3xl font-bold text-zinc-900">Egg Tracker</Text>
 
           <Text className="mt-2 text-base text-zinc-500">
             {mode === "login"
@@ -60,7 +69,6 @@ export default function LoginScreen() {
 
         {/* hlavní karta */}
         <View className="rounded-[28px] bg-zinc-100 px-5 py-6 shadow-lg">
-
           {/* inputy */}
           <View className="gap-4">
             <TextInput
@@ -91,8 +99,8 @@ export default function LoginScreen() {
               {submitting
                 ? t("login.loading")
                 : mode === "login"
-                ? t("login.loginButton")
-                : t("login.registerButton")}
+                  ? t("login.loginButton")
+                  : t("login.registerButton")}
             </Text>
           </Pressable>
 
@@ -110,7 +118,6 @@ export default function LoginScreen() {
             </Text>
           </Pressable>
         </View>
-
       </View>
     </SafeAreaView>
   );

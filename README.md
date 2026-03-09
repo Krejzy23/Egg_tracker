@@ -10,13 +10,13 @@ Mobile app for tracking egg production from backyard chickens.
 
 ## 📱 Screenshots
 
-| Login                      | Home                      | Settings                      |
+| Login                      | Home                      |   Add Eggs                    |
 | -------------------------- | ------------------------- | ----------------------------- |
-| ![](screenshots/login.png) | ![](screenshots/home.png) | ![](screenshots/settings.png) |
+| ![](screenshots/login.png) | ![](screenshots/home.png) | ![](screenshots/add-eggs.png) |
 
-| Calendar                      | Add Eggs                      |
-| ----------------------------- | ----------------------------- |
-| ![](screenshots/calendar.png) | ![](screenshots/add-eggs.png) |
+| Calendar                      | Settings                      |  Settings EN                  |
+| ----------------------------- | ----------------------------- |-------------------------------|
+| ![](screenshots/calendar.png) | ![](screenshots/settings.png) | ![](screenshots/settings1.png)|
 
 | Stats + WGraph              | Stats + MGraph              | Stats + Trends              |
 | --------------------------- | --------------------------- | --------------------------- |
@@ -57,9 +57,9 @@ Mobile app for tracking egg production from backyard chickens.
 ## 🗺️ Roadmap
 
 **Future improvements planned:**
-- Notifications for egg collection - ✅
-- Multi-language CZ/EN/DE - Work in progres....
-- iOS support
+- Notifications for eggs collection - ✅
+- Multi-language CZ/EN/DE - ✅
+- iOS support - Work in progres....
 - Egg production predictions
 - Multi-coop support
 

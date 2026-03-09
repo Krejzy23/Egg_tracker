@@ -1,6 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, Pressable } from "react-native";
 import { useEffect, useState } from "react";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { exportEggEntriesToCsv } from "../features/stats/statsExport";
 import { useEggEntries } from "../context/EggEntriesContext";
@@ -24,8 +25,11 @@ import {
 } from "../services/settingsStorage";
 
 import { getTodayDateString } from "../utils/date";
+import type { RootStackParamList } from "../types/navigation";
 
-export default function SettingsScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, "Settings">;
+
+export default function SettingsScreen({ navigation }: Props) {
   const { eggEntries, getEggCountForDate } = useEggEntries();
   const { language, setLanguage, t } = useLanguage();
 
@@ -157,9 +161,18 @@ export default function SettingsScreen() {
           <SettingsInfoRow
             icon="information-circle-outline"
             title={t("settings.appVersion")}
-            value="1.0.0"
+            value="1.1.0"
           />
         </SettingsSection>
+
+        <Pressable
+          onPress={() => navigation.navigate("Tabs", { screen: "Home" })}
+          className="mt-3 rounded-2xl bg-blue-600 py-4"
+        >
+          <Text className="text-center text-base font-semibold text-white">
+            {t("settings.goBackButton")}
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

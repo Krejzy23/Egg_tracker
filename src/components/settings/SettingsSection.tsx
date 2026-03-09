@@ -9,11 +9,11 @@ export function SettingsSection({
 }) {
   return (
     <View className="mb-5">
-      <Text className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500">
+      <Text className="mb-3 text-base font-semibold uppercase tracking-wide text-zinc-500">
         {title}
       </Text>
 
-      <View className="rounded-[28px] bg-white shadow-sm">{children}</View>
+      <View className="rounded-[28px] bg-white shadow-lg">{children}</View>
     </View>
   );
 }

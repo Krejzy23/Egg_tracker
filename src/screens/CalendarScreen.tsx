@@ -37,7 +37,7 @@ export default function CalendarScreen({ navigation }: Props) {
           </Text>
         </View>
 
-        <View className="rounded-[28px] bg-white px-4 py-2 shadow-lg">
+        <View className="rounded-[28px] bg-white px-2 py-2 shadow-lg">
           <Calendar
             theme={{
               calendarBackground: "#ffffff",
@@ -65,7 +65,7 @@ export default function CalendarScreen({ navigation }: Props) {
                   onPress={() =>
                     navigation.navigate("AddEggs", { date: date.dateString })
                   }
-                  className="items-center justify-center rounded-2xl -my-1 px-1"
+                  className="items-center justify-center rounded-2xl px-1"
                   style={{
                     minWidth: 36,
                     minHeight: 44,
@@ -87,14 +87,14 @@ export default function CalendarScreen({ navigation }: Props) {
                   </Text>
 
                   {eggCount > 0 ? (
-                    <View className="mt-1 flex-row items-center rounded-full bg-white/70 px-2 my-1">
-                      <Text className="text-sm font-semibold text-amber-900">
+                    <View className="flex-row items-center rounded-full bg-white/70 px-2 my-2">
+                      <Text className="text-lg font-semibold text-amber-900">
                         {eggCount}
                       </Text>
-                      <Text className="ml-1 text-[10px]">🥚</Text>
+                      <Text className="ml-1 text-[14px]">🥚</Text>
                     </View>
                   ) : (
-                    <Text className="mt-1 text-[10px] text-zinc-300">—</Text>
+                    <Text className="mt-1 text-[14px] text-zinc-300">—</Text>
                   )}
                 </Pressable>
               );

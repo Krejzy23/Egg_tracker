@@ -65,9 +65,9 @@ export default function HomeScreen({ navigation }: Props) {
 
           <Pressable
             onPress={() => navigation.navigate("Settings")}
-            className="rounded-2xl bg-white p-3 shadow-lg"
+            className="rounded-2xl bg-blue-600 p-3 shadow-lg shadow-blue-600"
           >
-            <Ionicons name="settings-outline" size={22} color="#18181b" />
+            <Ionicons name="settings-outline" size={22} color="#fff" />
           </Pressable>
         </View>
 
@@ -82,7 +82,7 @@ export default function HomeScreen({ navigation }: Props) {
                 {chickens}
               </Text>
 
-              <Text className="mt-10 text-md text-zinc-500">
+              <Text className="mt-6 text-md text-zinc-500">
                 {t("home.chickensEdit")}
               </Text>
             </View>
@@ -171,9 +171,9 @@ export default function HomeScreen({ navigation }: Props) {
 
         <Pressable
           onPress={logout}
-          className="mt-6 rounded-2xl bg-zinc-200 py-4"
+          className="mt-6 rounded-2xl bg-red-400 py-4"
         >
-          <Text className="text-center text-base font-semibold text-zinc-900">
+          <Text className="text-center text-lg font-semibold text-white">
             {t("home.logout")}
           </Text>
         </Pressable>
