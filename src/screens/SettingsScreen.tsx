@@ -1,36 +1,82 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, Pressable, Switch, Alert } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useEggEntries } from "../context/EggEntriesContext";
 import { exportEggEntriesToCsv } from "../features/stats/statsExport";
-
-
-
-
+import { useEggEntries } from "../context/EggEntriesContext";
+import {
+  setupNotificationChannel,
+  requestNotificationPermissions,
+  cancelEggReminder,
+  syncEggReminderForToday,
+} from "../services/notifications";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SettingsScreen() {
-  const { eggEntries } = useEggEntries();
+  const { eggEntries, getEggCountForDate } = useEggEntries();
+  const today = new Date().toISOString().split("T")[0];
 
-  // Placeholder pro budoucí notifikace
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-
-  // Placeholder pro budoucí přepínač jazyka
   const [language, setLanguage] = useState<"cs" | "en">("cs");
 
-  const handleLanguagePress = () => {
-    setLanguage((prev) => (prev === "cs" ? "en" : "cs"));
+  useEffect(() => {
+    const loadPreferences = async () => {
+      const storedNotifications =
+        await AsyncStorage.getItem("eggReminderEnabled");
+      const storedLanguage = await AsyncStorage.getItem("appLanguage");
+
+      setNotificationsEnabled(storedNotifications === "true");
+
+      if (storedLanguage === "cs" || storedLanguage === "en") {
+        setLanguage(storedLanguage);
+      }
+    };
+
+    loadPreferences();
+  }, []);
+
+  const handleLanguagePress = async () => {
+    const nextLanguage = language === "cs" ? "en" : "cs";
+    setLanguage(nextLanguage);
+    await AsyncStorage.setItem("appLanguage", nextLanguage);
   };
 
-  const handleNotificationsToggle = (value: boolean) => {
-    setNotificationsEnabled(value);
+  const handleNotificationsToggle = async (value: boolean) => {
+    if (value) {
+      await setupNotificationChannel();
 
-    Alert.alert(
-      "Info",
-      value
-        ? "Notifikace budou doplněny v další verzi aplikace."
-        : "Notifikace byly vypnuty."
-    );
+      const granted = await requestNotificationPermissions();
+
+      if (!granted) {
+        Alert.alert(
+          "Notifikace nejsou povolené",
+          "Povol notifikace v systému, aby připomenutí fungovalo."
+        );
+        setNotificationsEnabled(false);
+        await AsyncStorage.setItem("eggReminderEnabled", "false");
+        return;
+      }
+
+      const todayEggCount = getEggCountForDate(today);
+
+      await syncEggReminderForToday({
+        enabled: true,
+        todayEggCount,
+        hour: 18,
+        minute: 0,
+      });
+
+      setNotificationsEnabled(true);
+      await AsyncStorage.setItem("eggReminderEnabled", "true");
+
+      Alert.alert("Hotovo", "Připomenutí bylo nastaveno.");
+      return;
+    }
+
+    await cancelEggReminder();
+    setNotificationsEnabled(false);
+    await AsyncStorage.setItem("eggReminderEnabled", "false");
+    Alert.alert("Hotovo", "Připomenutí bylo vypnuto.");
   };
 
   return (
@@ -65,7 +111,7 @@ export default function SettingsScreen() {
           <SettingsSwitchRow
             icon="notifications-outline"
             title="Denní připomenutí"
-            subtitle="Budoucí funkce pro připomenutí zápisu vajec"
+            subtitle="Připomene zapsání vajec, pokud dnešní záznam chybí"
             value={notificationsEnabled}
             onValueChange={handleNotificationsToggle}
           />

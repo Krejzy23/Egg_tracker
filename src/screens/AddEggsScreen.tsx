@@ -6,6 +6,8 @@ import type { RootStackParamList } from "../types/navigation";
 import { useEggEntries } from "../context/EggEntriesContext";
 import { useAuth } from "../context/AuthContext";
 import { saveEggEntry } from "../services/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { syncEggReminderForToday } from "../services/notifications";
 
 type Props = NativeStackScreenProps<RootStackParamList, "AddEggs">;
 
@@ -25,6 +27,20 @@ export default function AddEggsScreen({ route, navigation }: Props) {
     try {
       setEggCountForDate(date, eggs);
       await saveEggEntry(user.uid, date, eggs);
+
+      const today = new Date().toISOString().split("T")[0];
+      const notificationsEnabled =
+        (await AsyncStorage.getItem("eggReminderEnabled")) === "true";
+
+      if (date === today) {
+        await syncEggReminderForToday({
+          enabled: notificationsEnabled,
+          todayEggCount: eggs,
+          hour: 18,
+          minute: 0,
+        });
+      }
+
       Alert.alert("Uloženo", `Datum: ${date}\nPočet vajec: ${eggs}`);
       navigation.goBack();
     } catch (error: any) {
