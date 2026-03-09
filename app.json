@@ -6,18 +6,15 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.aleskrejzl.eggtracker"
     },
-
     "android": {
       "package": "com.aleskrejzl.eggtracker",
       "adaptiveIcon": {
@@ -28,24 +25,29 @@
       },
       "predictiveBackGestureEnabled": false
     },
-
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-
     "plugins": [
       "expo-sharing",
       "expo-asset",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-localization",
+        {
+          "supportedLocales": {
+            "ios": ["cs", "en"],
+            "android": ["cs", "en"]
+          }
+        }
+      ]
     ],
-
     "extra": {
       "eas": {
         "projectId": "bc0e61a5-aeb0-4e85-a147-67ff2dcddd66"
       }
     },
-
     "owner": "krejzy23"
   }
 }

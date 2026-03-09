@@ -42,7 +42,7 @@ export function getMonthKey(dateString: string) {
 
 export function formatWeekLabel(weekKey: string) {
   const [year, week] = weekKey.split("-W");
-  return `${Number(week)}. týden ${year}`;
+  return `${Number(week)}/${year}`;
 }
 
 export function formatMonthLabel(monthKey: string) {
@@ -50,7 +50,7 @@ export function formatMonthLabel(monthKey: string) {
   const date = new Date(Number(year), Number(month) - 1);
 
   return date.toLocaleDateString("cs-CZ", {
-    month: "long",
+    month: "numeric",
     year: "numeric",
   });
 }

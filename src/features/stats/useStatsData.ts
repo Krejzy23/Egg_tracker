@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { FilterType } from "./statsHelper";
+import { useLanguage } from "../../context/LanguageContext";
 import {
   calculateTrendPercent,
   formatWeekLabel,
@@ -20,6 +21,8 @@ export function useStatsData({
   filter,
 }: UseStatsDataParams) {
   const now = new Date();
+  const { language } = useLanguage();
+
 
   /**
    * Všechny záznamy seřazené podle data vzestupně
@@ -162,69 +165,63 @@ export function useStatsData({
    * - year: součty po měsících
    */
   const chartData = useMemo(() => {
+    const locale = language === "cs" ? "cs-CZ" : "en-US";
+  
     if (filter === "week") {
       const labels = filteredEntries.map(([date]) => {
         const d = new Date(date);
-        return d.toLocaleDateString("cs-CZ", { weekday: "short" });
+        return d.toLocaleDateString(locale, { weekday: "short" });
       });
-
+  
       const data = filteredEntries.map(([, count]) => count);
-
+  
       return {
         labels: labels.length > 0 ? labels : ["-"],
         datasets: [{ data: data.length > 0 ? data : [0] }],
       };
     }
-
+  
     if (filter === "month") {
       const data = filteredEntries.map(([, count]) => count);
-
+  
       const dayNumbers = filteredEntries.map(([date]) => {
         const d = new Date(date);
         return d.getDate();
       });
-
+  
       const labels = dayNumbers.map((day) => {
         const lastDay = dayNumbers[dayNumbers.length - 1];
         const visibleDays = [
           1, 3, 5, 7, 9, 11, 13, 15,
           17, 19, 21, 23, 25, 27, 29, lastDay,
         ];
-
+  
         return visibleDays.includes(day) ? String(day) : "";
       });
-
+  
       return {
         labels: labels.length > 0 ? labels : ["-"],
         datasets: [{ data: data.length > 0 ? data : [0] }],
       };
     }
-
+  
     const monthlyTotals = new Array(12).fill(0);
-
+  
     filteredEntries.forEach(([date, count]) => {
       const d = new Date(date);
       monthlyTotals[d.getMonth()] += count;
     });
-
+  
+    const monthLabels = Array.from({ length: 12 }, (_, index) => {
+      const date = new Date(2025, index, 1);
+      return date.toLocaleDateString(locale, { month: "short" });
+    });
+  
     return {
-      labels: [
-        "Led",
-        "Úno",
-        "Bře",
-        "Dub",
-        "Kvě",
-        "Čvn",
-        "Čvc",
-        "Srp",
-        "Zář",
-        "Říj",
-        "Lis",
-        "Pro",
-      ],
+      labels: monthLabels,
       datasets: [{ data: monthlyTotals }],
     };
-  }, [filteredEntries, filter]);
+  }, [filteredEntries, filter, language]);
 
   /**
    * Výpočet týdenních a měsíčních trendů

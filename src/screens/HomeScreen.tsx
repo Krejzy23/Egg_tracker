@@ -3,10 +3,13 @@ import { Text, View, Pressable, Alert, Image } from "react-native";
 import { useEggEntries } from "../context/EggEntriesContext";
 import { useAuth } from "../context/AuthContext";
 import { saveChickenCount } from "../services/firestore";
+import { useLanguage } from "../context/LanguageContext";
+
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { RootTabParamList, RootStackParamList } from "../types/navigation";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+
 import { Ionicons } from "@expo/vector-icons";
 
 type Props = CompositeScreenProps<
@@ -17,18 +20,32 @@ type Props = CompositeScreenProps<
 export default function HomeScreen({ navigation }: Props) {
   const { chickens, setChickens, getEggCountForDate } = useEggEntries();
   const { user, logout } = useAuth();
+  const { t, language } = useLanguage();
 
   const today = new Date().toLocaleDateString("sv-SE");
   const todayEggs = getEggCountForDate(today);
+
+  const formattedToday = new Date().toLocaleDateString(
+    language === "cs" ? "cs-CZ" : "en-US",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }
+  );
 
   const handleSave = async () => {
     if (!user) return;
 
     try {
       await saveChickenCount(user.uid, chickens);
-      Alert.alert("Uloženo", "Počet slepic byl uložen.");
+
+      Alert.alert(t("home.alerts.savedTitle"), t("home.alerts.savedMessage"));
     } catch (error: any) {
-      Alert.alert("Chyba", error?.message ?? "Nepodařilo se uložit data");
+      Alert.alert(
+        t("home.alerts.errorTitle"),
+        error?.message ?? t("home.alerts.errorMessage")
+      );
     }
   };
 
@@ -37,9 +54,12 @@ export default function HomeScreen({ navigation }: Props) {
       <View className="flex-1 px-5 pt-4 pb-24">
         <View className="mb-6 flex-row items-start justify-between">
           <View className="flex-1 pr-4">
-            <Text className="text-3xl font-bold text-zinc-900">Můj kurník</Text>
+            <Text className="text-3xl font-bold text-zinc-900">
+              {t("home.title")}
+            </Text>
+
             <Text className="mt-2 text-base text-zinc-500">
-              Přehled slepic a dnešní snůšky
+              {t("home.subtitle")}
             </Text>
           </View>
 
@@ -55,22 +75,22 @@ export default function HomeScreen({ navigation }: Props) {
           <View className="flex-row items-start justify-between">
             <View className="flex-1 pr-4">
               <Text className="text-base font-semibold uppercase tracking-wide text-amber-700">
-                Počet slepic
+                {t("home.chickens")}
               </Text>
 
-              <Text className="mt-3 text-5xl font-bold text-zinc-900">
+              <Text className="mt-4 text-6xl font-bold text-zinc-900">
                 {chickens}
               </Text>
 
-              <Text className="mt-2 text-sm text-zinc-500">
-                Uprav počet slepic v kurníku
+              <Text className="mt-10 text-md text-zinc-500">
+                {t("home.chickensEdit")}
               </Text>
             </View>
 
             <View className="items-center justify-center rounded-3xl bg-white/70 p-2">
               <Image
                 source={require("../../assets/chicken.png")}
-                className="h-32 w-32"
+                className="h-36 w-36"
                 resizeMode="contain"
               />
             </View>
@@ -85,8 +105,8 @@ export default function HomeScreen({ navigation }: Props) {
             </Pressable>
 
             <View className="mx-4 flex-1 rounded-2xl bg-white px-4 py-3">
-              <Text className="text-center text-lg font-semibold text-zinc-900">
-                {chickens} slepic
+              <Text className="text-center text-xl font-semibold text-zinc-900">
+                {t("home.chickensCount", { count: chickens })}
               </Text>
             </View>
 
@@ -102,8 +122,8 @@ export default function HomeScreen({ navigation }: Props) {
             onPress={handleSave}
             className="mt-5 rounded-2xl bg-blue-600 py-4"
           >
-            <Text className="text-center text-base font-semibold text-white">
-              Uložit počet slepic
+            <Text className="text-center text-lg font-semibold text-white">
+              {t("home.saveChickens")}
             </Text>
           </Pressable>
         </View>
@@ -112,17 +132,20 @@ export default function HomeScreen({ navigation }: Props) {
           <View className="flex-row items-start justify-between">
             <View className="flex-1 pr-4">
               <Text className="text-base font-semibold uppercase tracking-wide text-orange-700">
-                Dnešní záznam
+                {t("home.todayRecord")}
               </Text>
 
-              <Text className="mt-3 text-base text-zinc-500">{today}</Text>
+              <Text className="mt-3 text-base text-zinc-500">
+                {formattedToday}
+              </Text>
 
-              <View className="mt-4 flex-row items-end">
-                <Text className="text-5xl font-bold text-zinc-900">
+              <View className="mt-10 flex-row items-end">
+                <Text className="text-6xl font-bold text-zinc-900">
                   {todayEggs}
                 </Text>
+
                 <Text className="ml-2 mb-1 text-lg font-medium text-zinc-500">
-                  vajec
+                  {t("home.eggs")}
                 </Text>
               </View>
             </View>
@@ -130,7 +153,7 @@ export default function HomeScreen({ navigation }: Props) {
             <View className="items-center justify-center rounded-3xl bg-amber-50 p-2">
               <Image
                 source={require("../../assets/egg_mini.png")}
-                className="h-32 w-32"
+                className="h-36 w-36"
                 resizeMode="contain"
               />
             </View>
@@ -140,8 +163,8 @@ export default function HomeScreen({ navigation }: Props) {
             onPress={() => navigation.navigate("AddEggs", { date: today })}
             className="mt-5 rounded-2xl bg-amber-900 py-4"
           >
-            <Text className="text-center text-base font-semibold text-white">
-              Upravit dnešní záznam
+            <Text className="text-center text-lg font-semibold text-white">
+              {t("home.editToday")}
             </Text>
           </Pressable>
         </View>
@@ -151,7 +174,7 @@ export default function HomeScreen({ navigation }: Props) {
           className="mt-6 rounded-2xl bg-zinc-200 py-4"
         >
           <Text className="text-center text-base font-semibold text-zinc-900">
-            Odhlásit se
+            {t("home.logout")}
           </Text>
         </Pressable>
       </View>

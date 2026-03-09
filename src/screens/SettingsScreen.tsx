@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { exportEggEntriesToCsv } from "../features/stats/statsExport";
 import { useEggEntries } from "../context/EggEntriesContext";
+import { useLanguage } from "../context/LanguageContext";
 
 import { SettingsSection } from "../components/settings/SettingsSection";
 import { SettingsButtonRow } from "../components/settings/SettingsButtonRow";
@@ -20,17 +21,15 @@ import {
 import {
   getNotificationPreference,
   setNotificationPreference,
-  getLanguagePreference,
-  setLanguagePreference,
 } from "../services/settingsStorage";
 
 import { getTodayDateString } from "../utils/date";
 
 export default function SettingsScreen() {
   const { eggEntries, getEggCountForDate } = useEggEntries();
+  const { language, setLanguage, t } = useLanguage();
 
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [language, setLanguage] = useState<"cs" | "en">("cs");
 
   const today = getTodayDateString();
 
@@ -40,31 +39,38 @@ export default function SettingsScreen() {
 
   const loadPreferences = async () => {
     const notifications = await getNotificationPreference();
-    const lang = await getLanguagePreference();
-
     setNotificationsEnabled(notifications);
-
-    if (lang) {
-      setLanguage(lang);
-    }
   };
 
   const handleLanguagePress = async () => {
     const next = language === "cs" ? "en" : "cs";
-    setLanguage(next);
-    await setLanguagePreference(next);
+    await setLanguage(next);
+
+    if (notificationsEnabled) {
+      const todayEggCount = getEggCountForDate(today);
+
+      await setupNotificationChannel(next);
+
+      await syncEggReminderForToday({
+        enabled: true,
+        todayEggCount,
+        language: next,
+        hour: 18,
+        minute: 0,
+      });
+    }
   };
 
   const handleNotificationsToggle = async (value: boolean) => {
     if (value) {
-      await setupNotificationChannel();
+      await setupNotificationChannel(language);
 
       const granted = await requestNotificationPermissions();
 
       if (!granted) {
         Alert.alert(
-          "Notifikace nejsou povolené",
-          "Povol notifikace v systému, aby připomenutí fungovalo."
+          t("settings.alerts.notificationsDeniedTitle"),
+          t("settings.alerts.notificationsDeniedMessage")
         );
 
         setNotificationsEnabled(false);
@@ -77,6 +83,7 @@ export default function SettingsScreen() {
       await syncEggReminderForToday({
         enabled: true,
         todayEggCount,
+        language,
         hour: 18,
         minute: 0,
       });
@@ -84,7 +91,10 @@ export default function SettingsScreen() {
       setNotificationsEnabled(true);
       await setNotificationPreference(true);
 
-      Alert.alert("Hotovo", "Připomenutí bylo nastaveno.");
+      Alert.alert(
+        t("settings.alerts.done"),
+        t("settings.alerts.reminderEnabled")
+      );
       return;
     }
 
@@ -93,51 +103,60 @@ export default function SettingsScreen() {
     setNotificationsEnabled(false);
     await setNotificationPreference(false);
 
-    Alert.alert("Hotovo", "Připomenutí bylo vypnuto.");
+    Alert.alert(
+      t("settings.alerts.done"),
+      t("settings.alerts.reminderDisabled")
+    );
   };
 
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
       <View className="flex-1 px-5 pt-4 pb-10">
         <View className="mb-6">
-          <Text className="text-3xl font-bold text-zinc-900">Nastavení</Text>
+          <Text className="text-3xl font-bold text-zinc-900">
+            {t("settings.title")}
+          </Text>
           <Text className="mt-2 text-base text-zinc-500">
-            Správa aplikace, dat a budoucích funkcí
+            {t("settings.subtitle")}
           </Text>
         </View>
 
-        <SettingsSection title="Data">
+        <SettingsSection title={t("settings.data")}>
           <SettingsButtonRow
             icon="download-outline"
-            title="Export statistik do CSV"
-            subtitle="Stáhne a nasdílí všechny záznamy vajec"
+            title={t("settings.exportCsv")}
+            subtitle={t("settings.exportCsvSubtitle")}
             onPress={() => exportEggEntriesToCsv(eggEntries)}
           />
         </SettingsSection>
 
-        <SettingsSection title="Aplikace">
+        <SettingsSection title={t("settings.app")}>
           <SettingsButtonRow
             icon="language-outline"
-            title="Jazyk aplikace"
-            subtitle={language === "cs" ? "🇨🇿 Čeština" : "🇬🇧 English"}
+            title={t("settings.appLanguage")}
+            subtitle={
+              language === "cs"
+                ? t("settings.languageCs")
+                : t("settings.languageEn")
+            }
             onPress={handleLanguagePress}
           />
         </SettingsSection>
 
-        <SettingsSection title="Upozornění">
+        <SettingsSection title={t("settings.notifications")}>
           <SettingsSwitchRow
             icon="notifications-outline"
-            title="Denní připomenutí"
-            subtitle="Připomene zapsání vajec, pokud dnešní záznam chybí"
+            title={t("settings.dailyReminder")}
+            subtitle={t("settings.dailyReminderSubtitle")}
             value={notificationsEnabled}
             onValueChange={handleNotificationsToggle}
           />
         </SettingsSection>
 
-        <SettingsSection title="O aplikaci">
+        <SettingsSection title={t("settings.about")}>
           <SettingsInfoRow
             icon="information-circle-outline"
-            title="Verze aplikace"
+            title={t("settings.appVersion")}
             value="1.0.0"
           />
         </SettingsSection>

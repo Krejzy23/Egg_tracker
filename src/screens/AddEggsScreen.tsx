@@ -5,8 +5,9 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../types/navigation";
 import { useEggEntries } from "../context/EggEntriesContext";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import { saveEggEntry } from "../services/firestore";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getNotificationPreference } from "../services/settingsStorage";
 import { syncEggReminderForToday } from "../services/notifications";
 
 type Props = NativeStackScreenProps<RootStackParamList, "AddEggs">;
@@ -15,7 +16,18 @@ export default function AddEggsScreen({ route, navigation }: Props) {
   const { date } = route.params;
   const { getEggCountForDate, setEggCountForDate } = useEggEntries();
   const { user } = useAuth();
+  const { t, language } = useLanguage();
+
   const [eggs, setEggs] = useState<number>(0);
+
+  const formattedDate = new Date(date).toLocaleDateString(
+    language === "cs" ? "cs-CZ" : "en-US",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }
+  );
 
   useEffect(() => {
     setEggs(getEggCountForDate(date));
@@ -29,22 +41,29 @@ export default function AddEggsScreen({ route, navigation }: Props) {
       await saveEggEntry(user.uid, date, eggs);
 
       const today = new Date().toISOString().split("T")[0];
-      const notificationsEnabled =
-        (await AsyncStorage.getItem("eggReminderEnabled")) === "true";
+      const notificationsEnabled = await getNotificationPreference();
 
       if (date === today) {
         await syncEggReminderForToday({
           enabled: notificationsEnabled,
           todayEggCount: eggs,
+          language,
           hour: 18,
           minute: 0,
         });
       }
 
-      Alert.alert("Uloženo", `Datum: ${date}\nPočet vajec: ${eggs}`);
+      Alert.alert(
+        t("addEggs.alerts.savedTitle"),
+        t("addEggs.alerts.savedMessage", { date: formattedDate, count: eggs })
+      );
+
       navigation.goBack();
     } catch (error: any) {
-      Alert.alert("Chyba", error?.message ?? "Nepodařilo se uložit data");
+      Alert.alert(
+        t("addEggs.alerts.errorTitle"),
+        error?.message ?? t("addEggs.alerts.errorMessage")
+      );
     }
   };
 
@@ -52,9 +71,12 @@ export default function AddEggsScreen({ route, navigation }: Props) {
     <SafeAreaView className="flex-1 bg-zinc-50">
       <View className="flex-1 px-5 pt-4 pb-10">
         <View className="mb-6">
-          <Text className="text-3xl font-bold text-zinc-900">Záznam vajec</Text>
+          <Text className="text-3xl font-bold text-zinc-900">
+            {t("addEggs.title")}
+          </Text>
+
           <Text className="mt-2 text-base text-zinc-500">
-            Přidej nebo uprav snůšku pro vybraný den
+            {t("addEggs.subtitle")}
           </Text>
         </View>
 
@@ -62,15 +84,15 @@ export default function AddEggsScreen({ route, navigation }: Props) {
           <View className="flex-row items-start justify-between">
             <View className="flex-1 pr-4">
               <Text className="text-sm font-semibold uppercase tracking-wide text-orange-700">
-                Vybraný den
+                {t("addEggs.selectedDay")}
               </Text>
 
               <Text className="mt-3 text-2xl font-bold text-zinc-900">
-                {date}
+                {formattedDate}
               </Text>
 
               <Text className="mt-2 text-base text-zinc-500">
-                Nastav počet snesených vajec
+                {t("addEggs.selectedDaySubtitle")}
               </Text>
             </View>
 
@@ -85,7 +107,7 @@ export default function AddEggsScreen({ route, navigation }: Props) {
 
           <View className="mt-8 rounded-3xl bg-white px-4 py-5">
             <Text className="text-xl font-medium text-zinc-500">
-              Počet vajec
+              {t("addEggs.eggCount")}
             </Text>
 
             <View className="mt-4 flex-row items-center justify-between">
@@ -97,7 +119,9 @@ export default function AddEggsScreen({ route, navigation }: Props) {
               </Pressable>
 
               <View className="mx-4 flex-1 items-center rounded-2xl bg-zinc-50 py-4">
-                <Text className="text-5xl font-bold text-zinc-900">{eggs}</Text>
+                <Text className="text-5xl font-bold text-zinc-900">
+                  {eggs}
+                </Text>
               </View>
 
               <Pressable
@@ -114,7 +138,7 @@ export default function AddEggsScreen({ route, navigation }: Props) {
             className="mt-6 rounded-2xl bg-blue-600 py-4"
           >
             <Text className="text-center text-base font-semibold text-white">
-              Uložit záznam
+              {t("addEggs.save")}
             </Text>
           </Pressable>
 
@@ -123,7 +147,7 @@ export default function AddEggsScreen({ route, navigation }: Props) {
             className="mt-3 rounded-2xl bg-zinc-200 py-4"
           >
             <Text className="text-center text-base font-semibold text-zinc-900">
-              Zpět
+              {t("addEggs.back")}
             </Text>
           </Pressable>
         </View>

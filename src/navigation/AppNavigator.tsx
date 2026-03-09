@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
+import { useLanguage } from "../context/LanguageContext";
 
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
@@ -21,6 +22,7 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 function AppTabs() {
+  const { t } = useLanguage();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -60,17 +62,17 @@ function AppTabs() {
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        options={{ title: "Domů" }}
+        options={{ title: t("navigation.home") }}
       />
       <Tab.Screen
         name="CalendarTab"
         component={CalendarScreen}
-        options={{ title: "Kalendář" }}
+        options={{ title: t("navigation.calendar") }}
       />
       <Tab.Screen
         name="Stats"
         component={StatsScreen}
-        options={{ title: "Statistiky" }}
+        options={{ title: t("navigation.stats") }}
       />
     </Tab.Navigator>
   );

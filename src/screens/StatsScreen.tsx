@@ -1,13 +1,8 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Text,
-  View,
-  Pressable,
-  Dimensions,
-  ScrollView,
-} from "react-native";
+import { Text, View, Dimensions, ScrollView } from "react-native";
 import { useState } from "react";
 import { useEggEntries } from "../context/EggEntriesContext";
+import { useLanguage } from "../context/LanguageContext";
 import { LineChart, BarChart } from "react-native-chart-kit";
 
 import {
@@ -24,21 +19,18 @@ import InfoCard from "../features/stats/components/InfoCard";
 
 export default function StatsScreen() {
   const { eggEntries, chickens } = useEggEntries();
+  const { t } = useLanguage();
 
-  // Aktivní filtr statistik
   const [filter, setFilter] = useState<FilterType>("month");
 
-  // Šířka zařízení pro chart
   const screenWidth = Dimensions.get("window").width;
 
-  // Veškerá logika statistik je přesunutá do custom hooku
   const { stats, extraStats, chartData, trends } = useStatsData({
     eggEntries,
     chickens,
     filter,
   });
 
-  // Základní konfigurace grafu
   const chartConfig = {
     backgroundColor: "#fafafa",
     backgroundGradientFrom: "#fafafa",
@@ -64,54 +56,52 @@ export default function StatsScreen() {
           <View className="mb-6 flex-row items-start justify-between">
             <View className="flex-1 pr-4">
               <Text className="text-3xl font-bold text-zinc-900">
-                Statistiky
+                {t("stats.title")}
               </Text>
 
               <Text className="mt-2 text-base text-zinc-500">
-                Přehled produkce vajec
+                {t("stats.subtitle")}
               </Text>
             </View>
           </View>
 
-          {/* Přepínač filtru */}
           <View className="mb-5 flex-row gap-3">
             <FilterButton
-              label="Týden"
+              label={t("stats.filters.week")}
               active={filter === "week"}
               onPress={() => setFilter("week")}
             />
             <FilterButton
-              label="Měsíc"
+              label={t("stats.filters.month")}
               active={filter === "month"}
               onPress={() => setFilter("month")}
             />
             <FilterButton
-              label="Rok"
+              label={t("stats.filters.year")}
               active={filter === "year"}
               onPress={() => setFilter("year")}
             />
           </View>
 
-          {/* Hlavní stat cards */}
           <View className="gap-4">
             <View className="flex-row gap-4">
               <StatCard
-                label="Celkem vajec"
+                label={t("stats.cards.totalEggs")}
                 value={stats.totalEggs.toString()}
               />
               <StatCard
-                label="Počet dnů záznamů"
+                label={t("stats.cards.totalDays")}
                 value={stats.totalDays.toString()}
               />
             </View>
 
             <View className="flex-row gap-4">
               <StatCard
-                label="Produktivita slepic"
+                label={t("stats.cards.productivity")}
                 value={`${stats.productivityPercent.toFixed(0)}%`}
               />
               <StatCard
-                label="Průměr na slepici"
+                label={t("stats.cards.avgPerChicken")}
                 value={stats.avgPerChicken.toFixed(2)}
               />
             </View>
@@ -119,14 +109,13 @@ export default function StatsScreen() {
 
           <View className="mt-6 px-4 py-2">
             <Text className="text-xl font-semibold text-zinc-900">
-              Produkce vajec
+              {t("stats.chart.title")}
             </Text>
 
             <Text className="mt-1 text-sm text-zinc-500">
-              Graf podle zvoleného období
+              {t("stats.chart.subtitle")}
             </Text>
 
-            {/* Graf podle filtru */}
             <View className="-ml-20 mt-4">
               {filter === "year" ? (
                 <BarChart
@@ -155,74 +144,85 @@ export default function StatsScreen() {
 
           <View className="mt-2">
             <Text className="text-xl font-semibold text-zinc-900">
-              Další statistiky
+              {t("stats.extra.title")}
             </Text>
 
             <Text className="mt-1 text-sm text-zinc-500">
-              Roční přehled a nejlepší výsledky
+              {t("stats.extra.subtitle")}
             </Text>
           </View>
 
-          {/* Rozšířené statistiky */}
           <View className="mt-4 gap-4">
             <View className="flex-row gap-4">
               <InfoCard
-                label="📈 Nejlepší den"
+                label={t("stats.extra.bestDay")}
                 primaryValue={
-                  extraStats.bestDay ? extraStats.bestDay[0] : "Žádná data"
+                  extraStats.bestDay
+                    ? extraStats.bestDay[0]
+                    : t("stats.extra.noData")
                 }
                 secondaryValue={
-                  extraStats.bestDay ? `${extraStats.bestDay[1]} vajec` : ""
+                  extraStats.bestDay
+                    ? `${extraStats.bestDay[1]} ${t("stats.extra.eggsSuffix")}`
+                    : ""
                 }
               />
 
               <InfoCard
-                label="📉 Nejhorší den"
+                label={t("stats.extra.worstDay")}
                 primaryValue={
-                  extraStats.worstDay ? extraStats.worstDay[0] : "Žádná data"
+                  extraStats.worstDay
+                    ? extraStats.worstDay[0]
+                    : t("stats.extra.noData")
                 }
                 secondaryValue={
-                  extraStats.worstDay ? `${extraStats.worstDay[1]} vajec` : ""
+                  extraStats.worstDay
+                    ? `${extraStats.worstDay[1]} ${t("stats.extra.eggsSuffix")}`
+                    : ""
                 }
               />
             </View>
 
             <View className="flex-row gap-4">
               <InfoCard
-                label="🏆 Nejlepší týden"
+                label={t("stats.extra.bestWeek")}
                 primaryValue={
                   extraStats.bestWeek
                     ? formatWeekLabel(extraStats.bestWeek[0])
-                    : "Žádná data"
+                    : t("stats.extra.noData")
                 }
                 secondaryValue={
-                  extraStats.bestWeek ? `${extraStats.bestWeek[1]} vajec` : ""
+                  extraStats.bestWeek
+                    ? `${extraStats.bestWeek[1]} ${t("stats.extra.eggsSuffix")}`
+                    : ""
                 }
               />
 
               <InfoCard
-                label="🗓️ Nejlepší měsíc"
+                label={t("stats.extra.bestMonth")}
                 primaryValue={
                   extraStats.bestMonth
                     ? formatMonthLabel(extraStats.bestMonth[0])
-                    : "Žádná data"
+                    : t("stats.extra.noData")
                 }
                 secondaryValue={
-                  extraStats.bestMonth ? `${extraStats.bestMonth[1]} vajec` : ""
+                  extraStats.bestMonth
+                    ? `${extraStats.bestMonth[1]} ${t("stats.extra.eggsSuffix")}`
+                    : ""
                 }
               />
             </View>
 
             <View className="flex-col gap-4">
               <InfoCard
-                label="📈 Týdenní trend"
+                label={t("stats.extra.weeklyTrend")}
                 primaryValue={`${trends.weeklyTrendPercent >= 0 ? "+" : ""}${trends.weeklyTrendPercent.toFixed(0)}%`}
                 secondaryValue={`${trends.lastCompletedWeekLabel} vs ${trends.previousCompletedWeekLabel}`}
                 trend={getTrendType(trends.weeklyTrendPercent)}
               />
 
               <InfoCard
-                label="📊 Měsíční trend"
+                label={t("stats.extra.monthlyTrend")}
                 primaryValue={`${trends.monthlyTrendPercent >= 0 ? "+" : ""}${trends.monthlyTrendPercent.toFixed(0)}%`}
                 secondaryValue={`${trends.lastCompletedMonthLabel} vs ${trends.previousCompletedMonthLabel}`}
                 trend={getTrendType(trends.monthlyTrendPercent)}

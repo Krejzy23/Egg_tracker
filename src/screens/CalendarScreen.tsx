@@ -1,6 +1,9 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, Pressable } from "react-native";
 import { Calendar } from "react-native-calendars";
+import { useLanguage } from "../context/LanguageContext";
+
+
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -22,14 +25,15 @@ function getHeatmapColor(count: number) {
 
 export default function CalendarScreen({ navigation }: Props) {
   const { eggEntries } = useEggEntries();
+  const { t } = useLanguage();
 
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
       <View className="flex-1 px-5 pt-4 pb-24">
         <View className="mb-4">
-          <Text className="text-3xl font-bold text-zinc-900">Kalendář</Text>
+          <Text className="text-3xl font-bold text-zinc-900">{t("calendar.title")}</Text>
           <Text className="mt-1 text-base text-zinc-500">
-            Vyber den a uprav záznam vajec
+          {t("calendar.subtitle")}
           </Text>
         </View>
 
@@ -100,20 +104,18 @@ export default function CalendarScreen({ navigation }: Props) {
         
         <View className="mt-4 rounded-3xl bg-amber-100 p-4">
           <Text className="text-sm font-semibold uppercase tracking-wide text-amber-700">
-            Tip
+            {t("calendar.textTip")}
           </Text>
           <Text className="mt-1 text-sm leading-5 text-zinc-600">
-            Klepni na libovolný den v kalendáři a můžeš upravit počet snesených
-            vajec pro dané datum.
+          {t("calendar.subtextTip")}
           </Text>
         </View>
         <View className="mt-1 rounded-3xl bg-amber-100 p-4">
           <Text className="text-sm font-semibold uppercase tracking-wide text-amber-700">
-            Přehled
+            {t("calendar.textOver")}
           </Text>
           <Text className="mt-1 text-sm leading-5 text-zinc-600">
-            Barva dne ukazuje intenzitu snůšky. Čím tmavší pole, tím více vajec
-            bylo ten den zapsáno.
+            {t("calendar.subtextOver")}
           </Text>
         </View>
       </View>

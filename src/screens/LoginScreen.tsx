@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Alert, Pressable, Text, TextInput, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function LoginScreen() {
   const { login, register } = useAuth();
+  const { t } = useLanguage();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +23,10 @@ export default function LoginScreen() {
         await register(email.trim(), password);
       }
     } catch (error: any) {
-      Alert.alert("Chyba", error?.message ?? "Něco se pokazilo");
+      Alert.alert(
+        t("login.alerts.errorTitle"),
+        error?.message ?? t("login.alerts.errorMessage")
+      );
     } finally {
       setSubmitting(false);
     }
@@ -35,7 +40,7 @@ export default function LoginScreen() {
         <View className="items-center mt-10">
           <Image
             source={require("../../assets/coop.png")}
-            className="h-40 w-full"
+            className="h-56 w-full"
             resizeMode="contain"
           />
         </View>
@@ -48,8 +53,8 @@ export default function LoginScreen() {
 
           <Text className="mt-2 text-base text-zinc-500">
             {mode === "login"
-              ? "Přihlas se do svého kurníku"
-              : "Vytvoř si nový účet"}
+              ? t("login.subtitleLogin")
+              : t("login.subtitleRegister")}
           </Text>
         </View>
 
@@ -61,7 +66,7 @@ export default function LoginScreen() {
             <TextInput
               value={email}
               onChangeText={setEmail}
-              placeholder="Email"
+              placeholder={t("login.emailPlaceholder")}
               autoCapitalize="none"
               keyboardType="email-address"
               className="rounded-2xl bg-white px-4 py-4 text-base"
@@ -70,7 +75,7 @@ export default function LoginScreen() {
             <TextInput
               value={password}
               onChangeText={setPassword}
-              placeholder="Heslo"
+              placeholder={t("login.passwordPlaceholder")}
               secureTextEntry
               className="rounded-2xl bg-white px-4 py-4 text-base"
             />
@@ -84,10 +89,10 @@ export default function LoginScreen() {
           >
             <Text className="text-center text-base font-semibold text-white">
               {submitting
-                ? "Načítám..."
+                ? t("login.loading")
                 : mode === "login"
-                ? "Přihlásit se"
-                : "Vytvořit účet"}
+                ? t("login.loginButton")
+                : t("login.registerButton")}
             </Text>
           </Pressable>
 
@@ -100,8 +105,8 @@ export default function LoginScreen() {
           >
             <Text className="text-center text-base font-medium text-blue-600">
               {mode === "login"
-                ? "Nemáš účet? Zaregistruj se"
-                : "Už máš účet? Přihlas se"}
+                ? t("login.switchToRegister")
+                : t("login.switchToLogin")}
             </Text>
           </Pressable>
         </View>
