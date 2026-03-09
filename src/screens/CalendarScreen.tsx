@@ -26,14 +26,14 @@ export default function CalendarScreen({ navigation }: Props) {
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
       <View className="flex-1 px-5 pt-4 pb-24">
-        <View className="mb-6">
+        <View className="mb-4">
           <Text className="text-3xl font-bold text-zinc-900">Kalendář</Text>
-          <Text className="mt-2 text-base text-zinc-500">
+          <Text className="mt-1 text-base text-zinc-500">
             Vyber den a uprav záznam vajec
           </Text>
         </View>
 
-        <View className="rounded-[28px] bg-white px-4 py-5 shadow-lg">
+        <View className="rounded-[28px] bg-white px-4 py-2 shadow-lg">
           <Calendar
             theme={{
               calendarBackground: "#ffffff",
@@ -61,7 +61,7 @@ export default function CalendarScreen({ navigation }: Props) {
                   onPress={() =>
                     navigation.navigate("AddEggs", { date: date.dateString })
                   }
-                  className="items-center justify-center rounded-2xl px-1 py-1"
+                  className="items-center justify-center rounded-2xl -my-1 px-1"
                   style={{
                     minWidth: 36,
                     minHeight: 44,
@@ -83,7 +83,7 @@ export default function CalendarScreen({ navigation }: Props) {
                   </Text>
 
                   {eggCount > 0 ? (
-                    <View className="mt-1 flex-row items-center rounded-full bg-white/70 px-2 py-1">
+                    <View className="mt-1 flex-row items-center rounded-full bg-white/70 px-2 my-1">
                       <Text className="text-sm font-semibold text-amber-900">
                         {eggCount}
                       </Text>
@@ -102,16 +102,16 @@ export default function CalendarScreen({ navigation }: Props) {
           <Text className="text-sm font-semibold uppercase tracking-wide text-amber-700">
             Tip
           </Text>
-          <Text className="mt-2 text-sm leading-5 text-zinc-600">
+          <Text className="mt-1 text-sm leading-5 text-zinc-600">
             Klepni na libovolný den v kalendáři a můžeš upravit počet snesených
             vajec pro dané datum.
           </Text>
         </View>
-        <View className="mt-2 rounded-3xl bg-amber-100 p-4">
+        <View className="mt-1 rounded-3xl bg-amber-100 p-4">
           <Text className="text-sm font-semibold uppercase tracking-wide text-amber-700">
             Přehled
           </Text>
-          <Text className="mt-2 text-sm leading-5 text-zinc-600">
+          <Text className="mt-1 text-sm leading-5 text-zinc-600">
             Barva dne ukazuje intenzitu snůšky. Čím tmavší pole, tím více vajec
             bylo ten den zapsáno.
           </Text>

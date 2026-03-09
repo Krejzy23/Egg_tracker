@@ -10,17 +10,17 @@ Mobile app for tracking egg production from backyard chickens.
 
 ## 📱 Screenshots
 
-| Login | Home |
-|------|------|
-| ![](screenshots/login.png) | ![](screenshots/home.png) |
+| Login                      | Home                      | Settings                      |
+| -------------------------- | ------------------------- | ----------------------------- |
+| ![](screenshots/login.png) | ![](screenshots/home.png) | ![](screenshots/settings.png) |
 
-| Calendar | Add Eggs |
-|------|------|
+| Calendar                      | Add Eggs                      |
+| ----------------------------- | ----------------------------- |
 | ![](screenshots/calendar.png) | ![](screenshots/add-eggs.png) |
 
-| Statistics | Stats + Trends|
-|------|------|
-| ![](screenshots/stats1.png) | ![](screenshots/stats3.png) |
+| Stats + WGraph              | Stats + MGraph              | Stats + Trends              |
+| --------------------------- | --------------------------- | --------------------------- |
+| ![](screenshots/stats1.png) | ![](screenshots/stats2.png) | ![](screenshots/stats3.png) |
 
 ---
 
@@ -56,18 +56,19 @@ Mobile app for tracking egg production from backyard chickens.
 
 ## 🗺️ Roadmap
 
-- Future improvements planned:
-- Notifications for egg collection
-- Multi-coop support
-- Egg production predictions
+**Future improvements planned:**
+- Notifications for egg collection - ✅
+- Multi-language CZ/EN/DE - Work in progres....
 - iOS support
-- Multi-language CZ/EN/DE
-
+- Egg production predictions
+- Multi-coop support
 
 ## 📦 Installation
+
 - APP is still in development but you can test it by download .apk on your android
 - 📲 APK Test Link
 - https://expo.dev/accounts/krejzy23/projects/egg-tracker/builds/8748e1e0-5507-4db4-aac8-420abae84591
 
 ## 👨‍💻 Author
+
 - Created by Aleš Krejzl
