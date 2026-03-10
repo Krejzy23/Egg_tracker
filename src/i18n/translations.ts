@@ -10,7 +10,6 @@ export const translations = {
       saveChickens: "Uložit počet slepic",
 
       todayRecord: "Dnešní záznam",
-      eggs: "vajec",
       editToday: "Upravit dnešní záznam",
 
       logout: "Odhlásit se",
@@ -167,7 +166,6 @@ export const translations = {
       saveChickens: "Save chicken count",
 
       todayRecord: "Today's record",
-      eggs: "eggs",
       editToday: "Edit today's entry",
 
       logout: "Log out",

@@ -1,5 +1,16 @@
-import { useState } from "react";
-import { Alert, Pressable, Text, TextInput, View, Image } from "react-native";
+import { useEffect, useState } from "react";
+import {
+  Alert,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  Keyboard,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
@@ -12,6 +23,26 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"login" | "register">("login");
   const [submitting, setSubmitting] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showEvent =
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent =
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+
+    const showSub = Keyboard.addListener(showEvent, () =>
+      setKeyboardVisible(true)
+    );
+    const hideSub = Keyboard.addListener(hideEvent, () =>
+      setKeyboardVisible(false)
+    );
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -34,91 +65,106 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-1 px-5 pt-3">
-        {/* horní ilustrace */}
-        <View className="mt-4">
-          <View className="flex flex-row">
-            <Image
-              source={require("../../assets/chicken_log2.png")}
-              className="h-16 w-16 mt-32"
-              resizeMode="contain"
-            />
-            <Image
-              source={require("../../assets/coop.png")}
-              className="h-56 w-56 mt-5"
-              resizeMode="contain"
-            />
-            <Image
-              source={require("../../assets/chicken_log.png")}
-              className="h-32 w-32 mt-32"
-              resizeMode="contain"
-            />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        className="flex-1"
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+          showsVerticalScrollIndicator={false}
+        >
+          <View className={`flex-1 px-5 ${keyboardVisible ? "pt-8" : "pt-20"}`}>
+            <View className={keyboardVisible ? "mt-0" : "mt-4"}>
+              <View className="flex-row items-end justify-center">
+                <Image
+                  source={require("../../assets/chicken_log2.png")}
+                  className={keyboardVisible ? "mb-2 h-10 w-10" : "h-16 w-16 mt-48"}
+                  resizeMode="contain"
+                />
+                <Image
+                  source={require("../../assets/coop.png")}
+                  className={keyboardVisible ? "h-40 w-40" : "h-72 w-72"}
+                  resizeMode="contain"
+                />
+                <Image
+                  source={require("../../assets/chicken_log.png")}
+                  className={keyboardVisible ? "mb-2 h-16 w-16" : "h-32 w-32 mt-56"}
+                  resizeMode="contain"
+                />
+              </View>
+            </View>
+
+            <View className={keyboardVisible ? "mb-5 mt-3" : "mb-6 mt-4"}>
+              <Text className="text-4xl font-bold text-zinc-900">
+                Egg Tracker
+              </Text>
+
+              <Text className="mt-2 text-lg text-zinc-500">
+                {mode === "login"
+                  ? t("login.subtitleLogin")
+                  : t("login.subtitleRegister")}
+              </Text>
+            </View>
+
+            <View className="rounded-[28px] bg-zinc-100 px-5 py-6 shadow-lg">
+              <View className="gap-4">
+                <TextInput
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder={t("login.emailPlaceholder")}
+                  placeholderTextColor="#71717a"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  className="rounded-2xl bg-white px-4 py-4 text-base"
+                  style={{ color: "#18181b" }}
+                  returnKeyType="next"
+                />
+
+                <TextInput
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder={t("login.passwordPlaceholder")}
+                  placeholderTextColor="#71717a"
+                  secureTextEntry
+                  className="rounded-2xl bg-white px-4 py-4 text-base"
+                  style={{ color: "#18181b" }}
+                  returnKeyType="done"
+                  onSubmitEditing={handleSubmit}
+                />
+              </View>
+
+              <Pressable
+                onPress={handleSubmit}
+                disabled={submitting}
+                className="mt-6 rounded-2xl bg-blue-600 py-4"
+              >
+                <Text className="text-center text-base font-semibold text-white">
+                  {submitting
+                    ? t("login.loading")
+                    : mode === "login"
+                      ? t("login.loginButton")
+                      : t("login.registerButton")}
+                </Text>
+              </Pressable>
+
+              <Pressable
+                onPress={() =>
+                  setMode((prev) => (prev === "login" ? "register" : "login"))
+                }
+                className="mt-4"
+              >
+                <Text className="text-center text-base font-medium text-blue-600">
+                  {mode === "login"
+                    ? t("login.switchToRegister")
+                    : t("login.switchToLogin")}
+                </Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-
-        {/* nadpis */}
-        <View className="mt-4 mb-6">
-          <Text className="text-3xl font-bold text-zinc-900">Egg Tracker</Text>
-
-          <Text className="mt-2 text-base text-zinc-500">
-            {mode === "login"
-              ? t("login.subtitleLogin")
-              : t("login.subtitleRegister")}
-          </Text>
-        </View>
-
-        {/* hlavní karta */}
-        <View className="rounded-[28px] bg-zinc-100 px-5 py-6 shadow-lg">
-          {/* inputy */}
-          <View className="gap-4">
-            <TextInput
-              value={email}
-              onChangeText={setEmail}
-              placeholder={t("login.emailPlaceholder")}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              className="rounded-2xl bg-white px-4 py-4 text-base"
-            />
-
-            <TextInput
-              value={password}
-              onChangeText={setPassword}
-              placeholder={t("login.passwordPlaceholder")}
-              secureTextEntry
-              className="rounded-2xl bg-white px-4 py-4 text-base"
-            />
-          </View>
-
-          {/* hlavní tlačítko */}
-          <Pressable
-            onPress={handleSubmit}
-            disabled={submitting}
-            className="mt-6 rounded-2xl bg-blue-600 py-4"
-          >
-            <Text className="text-center text-base font-semibold text-white">
-              {submitting
-                ? t("login.loading")
-                : mode === "login"
-                  ? t("login.loginButton")
-                  : t("login.registerButton")}
-            </Text>
-          </Pressable>
-
-          {/* přepínač login/register */}
-          <Pressable
-            onPress={() =>
-              setMode((prev) => (prev === "login" ? "register" : "login"))
-            }
-            className="mt-4"
-          >
-            <Text className="text-center text-base font-medium text-blue-600">
-              {mode === "login"
-                ? t("login.switchToRegister")
-                : t("login.switchToLogin")}
-            </Text>
-          </Pressable>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

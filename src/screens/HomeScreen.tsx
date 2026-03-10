@@ -74,15 +74,15 @@ export default function HomeScreen({ navigation }: Props) {
         <View className="rounded-[28px] bg-amber-50 px-5 py-5 shadow-lg">
           <View className="flex-row items-start justify-between">
             <View className="flex-1 pr-4">
-              <Text className="text-base font-semibold uppercase tracking-wide text-amber-700">
+              <Text className="text-base mt-3 font-semibold uppercase tracking-wide text-amber-700">
                 {t("home.chickens")}
               </Text>
 
-              <Text className="mt-4 text-6xl font-bold text-zinc-900">
+              <Text className="mt-5 text-5xl font-bold text-zinc-900">
                 {chickens}
               </Text>
 
-              <Text className="mt-6 text-md text-zinc-500">
+              <Text className="mt-1 text-md text-zinc-500">
                 {t("home.chickensEdit")}
               </Text>
             </View>
@@ -90,7 +90,7 @@ export default function HomeScreen({ navigation }: Props) {
             <View className="items-center justify-center rounded-3xl bg-white/70 p-2">
               <Image
                 source={require("../../assets/chicken.png")}
-                className="h-36 w-36"
+                className="h-28 w-28"
                 resizeMode="contain"
               />
             </View>
@@ -139,13 +139,13 @@ export default function HomeScreen({ navigation }: Props) {
                 {formattedToday}
               </Text>
 
-              <View className="mt-10 flex-row items-end">
-                <Text className="text-6xl font-bold text-zinc-900">
+              <View className="mt-5 flex-row items-end">
+                <Text className="text-5xl font-bold text-zinc-900">
                   {todayEggs}
                 </Text>
 
-                <Text className="ml-2 mb-1 text-lg font-medium text-zinc-500">
-                  {t("home.eggs")}
+                <Text className="ml-2 mb-1 text-4xl font-medium text-zinc-500">
+                  🥚
                 </Text>
               </View>
             </View>
@@ -153,7 +153,7 @@ export default function HomeScreen({ navigation }: Props) {
             <View className="items-center justify-center rounded-3xl bg-amber-50 p-2">
               <Image
                 source={require("../../assets/egg_mini.png")}
-                className="h-36 w-36"
+                className="h-28 w-28"
                 resizeMode="contain"
               />
             </View>

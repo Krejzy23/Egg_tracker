@@ -65,7 +65,7 @@ export default function CalendarScreen({ navigation }: Props) {
                   onPress={() =>
                     navigation.navigate("AddEggs", { date: date.dateString })
                   }
-                  className="items-center justify-center rounded-2xl px-1"
+                  className="items-center justify-center rounded-2xl px-1 -my-1"
                   style={{
                     minWidth: 36,
                     minHeight: 44,
@@ -87,7 +87,7 @@ export default function CalendarScreen({ navigation }: Props) {
                   </Text>
 
                   {eggCount > 0 ? (
-                    <View className="flex-row items-center rounded-full bg-white/70 px-2 my-2">
+                    <View className="flex-row items-center rounded-full bg-white/70 px-2 my-1">
                       <Text className="text-lg font-semibold text-amber-900">
                         {eggCount}
                       </Text>
