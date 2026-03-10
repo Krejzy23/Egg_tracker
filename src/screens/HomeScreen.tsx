@@ -5,12 +5,12 @@ import { useAuth } from "../context/AuthContext";
 import { saveChickenCount } from "../services/firestore";
 import { useLanguage } from "../context/LanguageContext";
 
+import Header from "../components/Header";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { RootTabParamList, RootStackParamList } from "../types/navigation";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import { Ionicons } from "@expo/vector-icons";
 
 type Props = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, "Home">,
@@ -52,29 +52,16 @@ export default function HomeScreen({ navigation }: Props) {
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
       <View className="flex-1 px-5 pt-4 pb-24">
-        <View className="mb-6 flex-row items-start justify-between">
-          <View className="flex-1 pr-4">
-            <Text className="text-3xl font-bold text-zinc-900">
-              {t("home.title")}
-            </Text>
-
-            <Text className="mt-2 text-base text-zinc-500">
-              {t("home.subtitle")}
-            </Text>
-          </View>
-
-          <Pressable
-            onPress={() => navigation.navigate("Settings")}
-            className="rounded-2xl bg-blue-600 p-3 shadow-lg shadow-blue-600"
-          >
-            <Ionicons name="settings-outline" size={22} color="#fff" />
-          </Pressable>
-        </View>
+        <Header
+          title={t("home.title")}
+          subtitle={t("home.subtitle")}
+          showSettings
+        />
 
         <View className="rounded-[28px] bg-amber-50 px-5 py-5 shadow-lg">
           <View className="flex-row items-start justify-between">
             <View className="flex-1 pr-4">
-              <Text className="text-base mt-3 font-semibold uppercase tracking-wide text-amber-700">
+              <Text className="text-base font-semibold uppercase tracking-wide text-amber-700">
                 {t("home.chickens")}
               </Text>
 
@@ -96,7 +83,7 @@ export default function HomeScreen({ navigation }: Props) {
             </View>
           </View>
 
-          <View className="mt-6 flex-row items-center">
+          <View className="mt-4 flex-row items-center">
             <Pressable
               onPress={() => setChickens(Math.max(0, chickens - 1))}
               className="h-12 w-12 items-center justify-center rounded-2xl bg-zinc-900"
@@ -120,18 +107,18 @@ export default function HomeScreen({ navigation }: Props) {
 
           <Pressable
             onPress={handleSave}
-            className="mt-5 rounded-2xl bg-blue-600 py-4"
+            className="mt-4 rounded-2xl bg-blue-600 py-4"
           >
-            <Text className="text-center text-lg font-semibold text-white">
+            <Text className="text-center text-base font-semibold text-white">
               {t("home.saveChickens")}
             </Text>
           </Pressable>
         </View>
 
-        <View className="mt-5 rounded-[28px] bg-white px-5 py-5 shadow-lg">
+        <View className="mt-4 rounded-[28px] bg-white px-5 py-5 shadow-lg">
           <View className="flex-row items-start justify-between">
             <View className="flex-1 pr-4">
-              <Text className="text-base font-semibold uppercase tracking-wide text-orange-700">
+              <Text className="text-base font-semibold uppercase tracking-wide text-amber-700">
                 {t("home.todayRecord")}
               </Text>
 
@@ -161,9 +148,9 @@ export default function HomeScreen({ navigation }: Props) {
 
           <Pressable
             onPress={() => navigation.navigate("AddEggs", { date: today })}
-            className="mt-5 rounded-2xl bg-amber-900 py-4"
+            className="mt-4 rounded-2xl bg-amber-900 py-4"
           >
-            <Text className="text-center text-lg font-semibold text-white">
+            <Text className="text-center text-base font-semibold text-white">
               {t("home.editToday")}
             </Text>
           </Pressable>

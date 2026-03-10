@@ -5,6 +5,7 @@ import { useEggEntries } from "../context/EggEntriesContext";
 import { useLanguage } from "../context/LanguageContext";
 import { LineChart, BarChart } from "react-native-chart-kit";
 
+import Header from "../components/Header";
 import {
   getTrendType,
   formatWeekLabel,
@@ -53,17 +54,7 @@ export default function StatsScreen() {
         contentContainerStyle={{ paddingBottom: 110 }}
       >
         <View className="px-5 pt-4">
-          <View className="mb-6 flex-row items-start justify-between">
-            <View className="flex-1 pr-4">
-              <Text className="text-3xl font-bold text-zinc-900">
-                {t("stats.title")}
-              </Text>
-
-              <Text className="mt-2 text-base text-zinc-500">
-                {t("stats.subtitle")}
-              </Text>
-            </View>
-          </View>
+          <Header title={t("stats.title")} subtitle={t("stats.subtitle")} showSettings/>
 
           <View className="mb-5 flex-row gap-3">
             <FilterButton

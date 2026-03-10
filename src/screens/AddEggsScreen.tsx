@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Text, View, Pressable, Alert, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+
+import Header from "../components/Header";
 import type { RootStackParamList } from "../types/navigation";
 import { useEggEntries } from "../context/EggEntriesContext";
 import { useAuth } from "../context/AuthContext";
@@ -70,28 +72,23 @@ export default function AddEggsScreen({ route, navigation }: Props) {
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
       <View className="flex-1 px-5 pt-4 pb-10">
-        <View className="mb-6">
-          <Text className="text-3xl font-bold text-zinc-900">
-            {t("addEggs.title")}
-          </Text>
-
-          <Text className="mt-2 text-base text-zinc-500">
-            {t("addEggs.subtitle")}
-          </Text>
-        </View>
+        <Header
+          title={t("addEggs.title")}
+          subtitle={t("addEggs.subtitle")}
+        />
 
         <View className="rounded-[28px] bg-amber-50 px-5 py-5 shadow-sm">
           <View className="flex-row items-start justify-between">
             <View className="flex-1 pr-4">
-              <Text className="text-sm font-semibold uppercase tracking-wide text-orange-700">
+              <Text className="text-base font-semibold uppercase tracking-wide text-amber-900">
                 {t("addEggs.selectedDay")}
               </Text>
 
-              <Text className="mt-3 text-2xl font-bold text-zinc-900">
+              <Text className="mt-4 text-2xl font-bold text-zinc-900">
                 {formattedDate}
               </Text>
 
-              <Text className="mt-2 text-base text-zinc-500">
+              <Text className="mt-8 text-base text-zinc-500">
                 {t("addEggs.selectedDaySubtitle")}
               </Text>
             </View>
@@ -99,13 +96,13 @@ export default function AddEggsScreen({ route, navigation }: Props) {
             <View className="items-center justify-center rounded-3xl bg-white/70 p-2">
               <Image
                 source={require("../../assets/eggs.png")}
-                className="h-24 w-24"
+                className="h-28 w-28"
                 resizeMode="contain"
               />
             </View>
           </View>
 
-          <View className="mt-8 rounded-3xl bg-white px-4 py-5">
+          <View className="mt-2 rounded-3xl bg-white px-4 py-5">
             <Text className="text-xl font-medium text-zinc-500">
               {t("addEggs.eggCount")}
             </Text>
@@ -118,10 +115,8 @@ export default function AddEggsScreen({ route, navigation }: Props) {
                 <Text className="text-2xl font-bold text-white">-</Text>
               </Pressable>
 
-              <View className="mx-4 flex-1 items-center rounded-2xl bg-zinc-50 py-4">
-                <Text className="text-5xl font-bold text-zinc-900">
-                  {eggs}
-                </Text>
+              <View className="mx-4 flex-1 items-center rounded-2xl bg-zinc-50 py-2">
+                <Text className="text-5xl font-bold text-zinc-900">{eggs}</Text>
               </View>
 
               <Pressable
@@ -135,22 +130,22 @@ export default function AddEggsScreen({ route, navigation }: Props) {
 
           <Pressable
             onPress={handleSave}
-            className="mt-6 rounded-2xl bg-blue-600 py-4"
+            className="mt-4 rounded-2xl bg-amber-900 py-4"
           >
             <Text className="text-center text-base font-semibold text-white">
               {t("addEggs.save")}
             </Text>
           </Pressable>
 
+        </View>
           <Pressable
             onPress={() => navigation.goBack()}
-            className="mt-3 rounded-2xl bg-zinc-200 py-4"
+            className="mt-10 rounded-2xl bg-blue-600 py-4"
           >
-            <Text className="text-center text-base font-semibold text-zinc-900">
+            <Text className="text-center text-base font-semibold text-white">
               {t("addEggs.back")}
             </Text>
           </Pressable>
-        </View>
       </View>
     </SafeAreaView>
   );

@@ -30,8 +30,8 @@ function AppTabs() {
         tabBarActiveTintColor: "#d97706",
         tabBarInactiveTintColor: "#71717a",
         tabBarStyle: {
-          height: 120,
-          paddingTop: 8,
+          height: 100,
+          paddingTop: 6,
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
           position: "absolute",
@@ -41,7 +41,7 @@ function AppTabs() {
           backgroundColor: "#fffbeb",
         },
         tabBarLabelStyle: {
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: "600",
         },
         tabBarIcon: ({ color, size, focused }) => {
@@ -89,22 +89,12 @@ function AuthenticatedApp() {
       <RootStack.Screen
         name="AddEggs"
         component={AddEggsScreen}
-        options={{
-          title: "Záznam vajec",
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: "#fafafa" },
-          headerTitleStyle: { fontWeight: "700" },
-        }}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{
-          title: "Nastavení",
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: "#fafafa" },
-          headerTitleStyle: { fontWeight: "700" },
-        }}
+        options={{headerShown: false}}
       />
     </RootStack.Navigator>
   );

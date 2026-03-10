@@ -58,7 +58,7 @@ Mobile app for tracking egg production from backyard chickens.
 
 **Future improvements planned:**
 - Notifications for eggs collection - ✅
-- Multi-language CZ/EN/DE - ✅
+- Multi-language CZ/EN - ✅
 - iOS support - Work in progres....
 - Egg production predictions
 - Multi-coop support
@@ -67,8 +67,9 @@ Mobile app for tracking egg production from backyard chickens.
 
 - APP is still in development but you can test it by download .apk on your android
 - 📲 ANDROID APK Test Link
-- v.1.1.0 - https://expo.dev/accounts/krejzy23/projects/egg-tracker/builds/09aeee36-910b-4911-87e4-cdb3cb683186
+- v.1.2.0 - https://expo.dev/accounts/krejzy23/projects/egg-tracker/builds/afb73293-e33b-402d-a865-2b461400e692
 
+- v1.2.0 
 ## 👨‍💻 Author
 
 - Created by Aleš Krejzl

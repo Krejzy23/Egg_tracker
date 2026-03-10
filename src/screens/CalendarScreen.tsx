@@ -3,7 +3,7 @@ import { View, Text, Pressable } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { useLanguage } from "../context/LanguageContext";
 
-
+import Header from "../components/Header";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -29,15 +29,10 @@ export default function CalendarScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
-      <View className="flex-1 px-5 pt-4 pb-24">
-        <View className="mb-4">
-          <Text className="text-3xl font-bold text-zinc-900">{t("calendar.title")}</Text>
-          <Text className="mt-1 text-base text-zinc-500">
-          {t("calendar.subtitle")}
-          </Text>
-        </View>
+      <View className="flex-1 px-4 pt-4 pb-24">
+        <Header title={t("calendar.title")} subtitle={t("calendar.subtitle")} showSettings/>
 
-        <View className="rounded-[28px] bg-white px-2 py-2 shadow-lg">
+        <View className="rounded-[28px] bg-white px-2 py-3 shadow-lg">
           <Calendar
             theme={{
               calendarBackground: "#ffffff",
@@ -70,7 +65,7 @@ export default function CalendarScreen({ navigation }: Props) {
                     minWidth: 36,
                     minHeight: 44,
                     backgroundColor: heatmapColor,
-                    borderWidth: isToday ? 2 : 0,
+                    borderWidth: isToday ? 2 : 1,
                     borderColor: isToday ? "#2563eb" : "transparent",
                   }}
                 >
@@ -87,8 +82,8 @@ export default function CalendarScreen({ navigation }: Props) {
                   </Text>
 
                   {eggCount > 0 ? (
-                    <View className="flex-row items-center rounded-full bg-white/70 px-2 my-1">
-                      <Text className="text-lg font-semibold text-amber-900">
+                    <View className="flex-row items-center rounded-full bg-white/70 px-1 my-1">
+                      <Text className="text-base font-semibold text-amber-900">
                         {eggCount}
                       </Text>
                       <Text className="ml-1 text-[14px]">🥚</Text>
@@ -101,13 +96,13 @@ export default function CalendarScreen({ navigation }: Props) {
             }}
           />
         </View>
-        
+
         <View className="mt-4 rounded-3xl bg-amber-100 p-4">
           <Text className="text-sm font-semibold uppercase tracking-wide text-amber-700">
             {t("calendar.textTip")}
           </Text>
           <Text className="mt-1 text-sm leading-5 text-zinc-600">
-          {t("calendar.subtextTip")}
+            {t("calendar.subtextTip")}
           </Text>
         </View>
         <View className="mt-1 rounded-3xl bg-amber-100 p-4">
