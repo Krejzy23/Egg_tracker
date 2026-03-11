@@ -10,9 +10,9 @@ Mobile app for tracking egg production from backyard chickens.
 
 ## 📱 Screenshots
 
-| Login                      | Login Auth                     |   Add Eggs                    |
+| Login                      | Login Auth                     |   Home Screen                 |
 | -------------------------- | ------------------------------ | ----------------------------- |
-| ![](screenshots/login.png) | ![](screenshots/login-key.png) | ![](screenshots/home.png) |
+| ![](screenshots/login.png) | ![](screenshots/login-key.png) | ![](screenshots/home.png)     |
 
 | Calendar                      | Settings                      |  Settings EN                    |
 | ----------------------------- | ----------------------------- | ------------------------------- |
@@ -37,6 +37,7 @@ Mobile app for tracking egg production from backyard chickens.
 - ☁️ Firebase cloud sync
 - 📅 Visual egg production heatmap
 - 📖 Guide to chickens and eggs
+- 🇨🇿 Czech and 🇬🇧 English localization
 ---
 
 ## 🧱 Tech Stack
