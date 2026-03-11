@@ -57,6 +57,24 @@ export function useStatsData({
     });
   }, [allEntriesSorted, filter, now]);
 
+
+  /**
+   * počet reálně uplynulych dnu v obdobi
+   */
+  const periodDaysCount = useMemo(() => {
+    if (filter === "week") {
+      return 7;
+    }
+
+    if (filter === "month") {
+      return now.getDate();
+    }
+
+    const startOfYear = new Date(now.getFullYear(), 0, 1);
+    const diffMs = now.getTime() - startOfYear.getTime();
+    return Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
+  }, [filter, now]);
+
   /**
    * Hlavní statistiky pro zvolený filtr
    */
@@ -66,23 +84,27 @@ export function useStatsData({
       0
     );
 
+    // počet zadaných dnů
     const totalDays = filteredEntries.length;
-
-    // produktivita slepic v procentech
+    // produktivita v procentech pouze pro zadane obdobi
     const productivityPercent =
-      chickens > 0 && totalDays > 0
-        ? (totalEggs / chickens / totalDays) * 100
+      chickens > 0 && periodDaysCount > 0
+        ? (totalEggs / (chickens * periodDaysCount)) * 100
         : 0;
-
+    //prumer na jednnu slepici
     const avgPerChicken = chickens > 0 ? totalEggs / chickens : 0;
+    // vypocet plnosti dat
+    const completionPercent =
+      periodDaysCount > 0 ? (totalDays / periodDaysCount) * 100 : 0;
 
     return {
       totalEggs,
       totalDays,
       productivityPercent,
       avgPerChicken,
+      completionPercent,
     };
-  }, [filteredEntries, chickens]);
+  }, [filteredEntries, chickens, periodDaysCount]);
 
   /**
    * Dodatečné statistiky počítané nad všemi daty
@@ -105,8 +127,8 @@ export function useStatsData({
     const bestDay =
       allEntriesSorted.length > 0
         ? allEntriesSorted.reduce((best, current) =>
-            current[1] > best[1] ? current : best
-          )
+          current[1] > best[1] ? current : best
+        )
         : null;
 
     // Nejhorší den bereme jen z reálně zadaných dnů s počtem vajec > 0
@@ -117,8 +139,8 @@ export function useStatsData({
     const worstDay =
       worstDayCandidates.length > 0
         ? worstDayCandidates.reduce((worst, current) =>
-            current[1] < worst[1] ? current : worst
-          )
+          current[1] < worst[1] ? current : worst
+        )
         : null;
 
     // Součty po týdnech a po měsících
@@ -166,57 +188,57 @@ export function useStatsData({
    */
   const chartData = useMemo(() => {
     const locale = language === "cs" ? "cs-CZ" : "en-US";
-  
+
     if (filter === "week") {
       const labels = filteredEntries.map(([date]) => {
         const d = new Date(date);
         return d.toLocaleDateString(locale, { weekday: "short" });
       });
-  
+
       const data = filteredEntries.map(([, count]) => count);
-  
+
       return {
         labels: labels.length > 0 ? labels : ["-"],
         datasets: [{ data: data.length > 0 ? data : [0] }],
       };
     }
-  
+
     if (filter === "month") {
       const data = filteredEntries.map(([, count]) => count);
-  
+
       const dayNumbers = filteredEntries.map(([date]) => {
         const d = new Date(date);
         return d.getDate();
       });
-  
+
       const labels = dayNumbers.map((day) => {
         const lastDay = dayNumbers[dayNumbers.length - 1];
         const visibleDays = [
           1, 3, 5, 7, 9, 11, 13, 15,
           17, 19, 21, 23, 25, 27, 29, lastDay,
         ];
-  
+
         return visibleDays.includes(day) ? String(day) : "";
       });
-  
+
       return {
         labels: labels.length > 0 ? labels : ["-"],
         datasets: [{ data: data.length > 0 ? data : [0] }],
       };
     }
-  
+
     const monthlyTotals = new Array(12).fill(0);
-  
+
     filteredEntries.forEach(([date, count]) => {
       const d = new Date(date);
       monthlyTotals[d.getMonth()] += count;
     });
-  
+
     const monthLabels = Array.from({ length: 12 }, (_, index) => {
       const date = new Date(2025, index, 1);
       return date.toLocaleDateString(locale, { month: "short" });
     });
-  
+
     return {
       labels: monthLabels,
       datasets: [{ data: monthlyTotals }],

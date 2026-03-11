@@ -12,6 +12,9 @@ import CalendarScreen from "../screens/CalendarScreen";
 import StatsScreen from "../screens/StatsScreen";
 import AddEggsScreen from "../screens/AddEggsScreen";
 import LoginScreen from "../screens/LoginScreen";
+import GuideEggScreen from "../screens/GuideEggScreen";
+import GuideChickenScreen from "../screens/GuideChickenScreen";
+
 
 import type { RootTabParamList, RootStackParamList } from "../types/navigation";
 import { useAuth } from "../context/AuthContext";
@@ -30,7 +33,7 @@ function AppTabs() {
         tabBarActiveTintColor: "#d97706",
         tabBarInactiveTintColor: "#71717a",
         tabBarStyle: {
-          height: 100,
+          height: 110,
           paddingTop: 6,
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
@@ -89,12 +92,22 @@ function AuthenticatedApp() {
       <RootStack.Screen
         name="AddEggs"
         component={AddEggsScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <RootStack.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+      <RootStack.Screen
+        name="ChickenGuide"
+        component={GuideChickenScreen}
+        options={{ headerShown: false }}
+      />
+      <RootStack.Screen
+        name="EggGuide"
+        component={GuideEggScreen}
+        options={{ headerShown: false }}
       />
     </RootStack.Navigator>
   );

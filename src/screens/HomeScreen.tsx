@@ -11,7 +11,6 @@ import type { RootTabParamList, RootStackParamList } from "../types/navigation";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-
 type Props = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, "Home">,
   NativeStackScreenProps<RootStackParamList>
@@ -75,11 +74,13 @@ export default function HomeScreen({ navigation }: Props) {
             </View>
 
             <View className="items-center justify-center rounded-3xl bg-white/70 p-2">
-              <Image
-                source={require("../../assets/chicken.png")}
-                className="h-28 w-28"
-                resizeMode="contain"
-              />
+              <Pressable onPress={() => navigation.navigate("ChickenGuide")}>
+                <Image
+                  source={require("../../assets/chicken.png")}
+                  className="h-28 w-28"
+                  resizeMode="contain"
+                />
+              </Pressable>
             </View>
           </View>
 
@@ -138,11 +139,13 @@ export default function HomeScreen({ navigation }: Props) {
             </View>
 
             <View className="items-center justify-center rounded-3xl bg-amber-50 p-2">
-              <Image
-                source={require("../../assets/egg_mini.png")}
-                className="h-28 w-28"
-                resizeMode="contain"
-              />
+              <Pressable onPress={() => navigation.navigate("EggGuide")}>
+                <Image
+                  source={require("../../assets/egg_mini.png")}
+                  className="h-28 w-28"
+                  resizeMode="contain"
+                />
+              </Pressable>
             </View>
           </View>
 

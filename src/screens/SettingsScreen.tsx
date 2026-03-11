@@ -161,7 +161,7 @@ export default function SettingsScreen({ navigation }: Props) {
           <SettingsInfoRow
             icon="information-circle-outline"
             title={t("settings.appVersion")}
-            value="1.1.0"
+            value="1.3.0"
           />
         </SettingsSection>
 

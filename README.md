@@ -10,17 +10,21 @@ Mobile app for tracking egg production from backyard chickens.
 
 ## 📱 Screenshots
 
-| Login                      | Home                      |   Add Eggs                    |
-| -------------------------- | ------------------------- | ----------------------------- |
-| ![](screenshots/login.png) | ![](screenshots/home.png) | ![](screenshots/add-eggs.png) |
+| Login                      | Login Auth                     |   Add Eggs                    |
+| -------------------------- | ------------------------------ | ----------------------------- |
+| ![](screenshots/login.png) | ![](screenshots/login-key.png) | ![](screenshots/home.png) |
 
-| Calendar                      | Settings                      |  Settings EN                  |
-| ----------------------------- | ----------------------------- |-------------------------------|
-| ![](screenshots/calendar.png) | ![](screenshots/settings.png) | ![](screenshots/settings1.png)|
+| Calendar                      | Settings                      |  Settings EN                    |
+| ----------------------------- | ----------------------------- | ------------------------------- |
+| ![](screenshots/calendar.png) | ![](screenshots/settings.png) | ![](screenshots/settings-en.png)|
 
 | Stats + WGraph              | Stats + MGraph              | Stats + Trends              |
 | --------------------------- | --------------------------- | --------------------------- |
 | ![](screenshots/stats1.png) | ![](screenshots/stats2.png) | ![](screenshots/stats3.png) |
+
+| Add Eggs                      |  Guide Eggs                     | Guide Chickens                   |
+| ----------------------------- | ------------------------------- | ---------------------------------|
+| ![](screenshots/add-eggs.png) | ![](screenshots/guide-eggs.png) | ![](screenshots/guide-chick.png) |
 
 ---
 
@@ -32,7 +36,7 @@ Mobile app for tracking egg production from backyard chickens.
 - 📁 CSV export of all data
 - ☁️ Firebase cloud sync
 - 📅 Visual egg production heatmap
-
+- 📖 Guide to chickens and eggs
 ---
 
 ## 🧱 Tech Stack
@@ -59,6 +63,7 @@ Mobile app for tracking egg production from backyard chickens.
 **Future improvements planned:**
 - Notifications for eggs collection - ✅
 - Multi-language CZ/EN - ✅
+- Add Guides - ✅
 - iOS support - Work in progres....
 - Egg production predictions
 - Multi-coop support
@@ -67,9 +72,9 @@ Mobile app for tracking egg production from backyard chickens.
 
 - APP is still in development but you can test it by download .apk on your android
 - 📲 ANDROID APK Test Link
-- v.1.2.0 - https://expo.dev/accounts/krejzy23/projects/egg-tracker/builds/afb73293-e33b-402d-a865-2b461400e692
+- v.1.3.0 - https://expo.dev/accounts/krejzy23/projects/egg-tracker/builds/440b4c06-bb20-4c9e-93e4-2f2c8c31c0c7
 
-- v1.2.0 
+
 ## 👨‍💻 Author
 
 - Created by Aleš Krejzl

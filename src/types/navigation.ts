@@ -14,4 +14,6 @@ export type RootStackParamList = {
   Tabs: NavigatorScreenParams<RootTabParamList>;
   AddEggs: { date: string };
   Settings: undefined;
+  ChickenGuide: undefined;
+  EggGuide: undefined;
 };

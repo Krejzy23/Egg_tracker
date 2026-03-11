@@ -4,6 +4,8 @@ import { Calendar } from "react-native-calendars";
 import { useLanguage } from "../context/LanguageContext";
 
 import Header from "../components/Header";
+import { setCalendarLocale } from "../utils/calendarLocale";
+
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -25,12 +27,18 @@ function getHeatmapColor(count: number) {
 
 export default function CalendarScreen({ navigation }: Props) {
   const { eggEntries } = useEggEntries();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  setCalendarLocale(language);
 
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
       <View className="flex-1 px-4 pt-4 pb-24">
-        <Header title={t("calendar.title")} subtitle={t("calendar.subtitle")} showSettings/>
+        <Header
+          title={t("calendar.title")}
+          subtitle={t("calendar.subtitle")}
+          showSettings
+        />
 
         <View className="rounded-[28px] bg-white px-2 py-3 shadow-lg">
           <Calendar
@@ -82,8 +90,8 @@ export default function CalendarScreen({ navigation }: Props) {
                   </Text>
 
                   {eggCount > 0 ? (
-                    <View className="flex-row items-center rounded-full bg-white/70 px-1 my-1">
-                      <Text className="text-base font-semibold text-amber-900">
+                    <View className="my-1 flex-row items-center rounded-full bg-white/70 px-1">
+                      <Text className="px-1 text-base font-semibold text-amber-900">
                         {eggCount}
                       </Text>
                       <Text className="ml-1 text-[14px]">🥚</Text>
@@ -105,6 +113,7 @@ export default function CalendarScreen({ navigation }: Props) {
             {t("calendar.subtextTip")}
           </Text>
         </View>
+
         <View className="mt-1 rounded-3xl bg-amber-100 p-4">
           <Text className="text-sm font-semibold uppercase tracking-wide text-amber-700">
             {t("calendar.textOver")}
