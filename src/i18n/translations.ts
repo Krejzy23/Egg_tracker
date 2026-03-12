@@ -127,26 +127,6 @@ export const translations = {
         errorMessage: "Nepodařilo se uložit data",
       },
     },
-    //LOGIN KARTA
-    login: {
-      subtitleLogin: "Přihlas se do svého kurníku",
-      subtitleRegister: "Vytvoř si nový účet",
-
-      emailPlaceholder: "Email",
-      passwordPlaceholder: "Heslo",
-
-      loading: "Načítám...",
-      loginButton: "Přihlásit se",
-      registerButton: "Vytvořit účet",
-
-      switchToRegister: "Nemáš účet? Zaregistruj se",
-      switchToLogin: "Už máš účet? Přihlas se",
-
-      alerts: {
-        errorTitle: "Chyba",
-        errorMessage: "Něco se pokazilo"
-      }
-    },
     // NOTIFIKACE
     notifications: {
       channelName: "Připomenutí vajec",
@@ -256,7 +236,37 @@ export const translations = {
         },
       },
     },
-
+    //LOGIN ALERTS
+    login: {
+      subtitleLogin: "Přihlas se do svého kurníku",
+      subtitleRegister: "Vytvoř si nový účet",
+    
+      emailPlaceholder: "Email",
+      passwordPlaceholder: "Heslo",
+    
+      loading: "Načítám...",
+      loginButton: "Přihlásit se",
+      registerButton: "Vytvořit účet",
+    
+      switchToRegister: "Nemáš účet? Zaregistruj se",
+      switchToLogin: "Už máš účet? Přihlas se",
+    
+      alerts: {
+        errorTitle: "Chyba přihlášení",
+        errorMessage: "Přihlášení se nezdařilo. Zkus to znovu.",
+      },
+    
+      errors: {
+        invalidEmail: "Zadaný email není platný.",
+        userNotFound: "Uživatel s tímto emailem neexistuje.",
+        wrongPassword: "Zadané heslo není správné.",
+        emailInUse: "Tento email je už zaregistrovaný.",
+        weakPassword: "Heslo je příliš slabé.",
+        invalidCredential: "Neplatné přihlašovací údaje.",
+        missingPassword: "Zadej heslo.",
+        tooManyRequests: "Bylo provedeno příliš mnoho pokusů. Zkus to prosím později.",
+      },
+    }
   },
 
   en: {
@@ -388,26 +398,6 @@ export const translations = {
       },
     },
 
-    login: {
-      subtitleLogin: "Sign in to your coop",
-      subtitleRegister: "Create a new account",
-
-      emailPlaceholder: "Email",
-      passwordPlaceholder: "Password",
-
-      loading: "Loading...",
-      loginButton: "Sign in",
-      registerButton: "Create account",
-
-      switchToRegister: "Don't have an account? Register",
-      switchToLogin: "Already have an account? Sign in",
-
-      alerts: {
-        errorTitle: "Error",
-        errorMessage: "Something went wrong"
-      }
-    },
-
     notifications: {
       channelName: "Egg reminders",
       reminderTitle: "Egg Tracker",
@@ -517,5 +507,35 @@ export const translations = {
         },
       },
     },
+    login: {
+      subtitleLogin: "Sign in to your coop",
+      subtitleRegister: "Create a new account",
+    
+      emailPlaceholder: "Email",
+      passwordPlaceholder: "Password",
+    
+      loading: "Loading...",
+      loginButton: "Sign in",
+      registerButton: "Create account",
+    
+      switchToRegister: "Don't have an account? Register",
+      switchToLogin: "Already have an account? Sign in",
+    
+      alerts: {
+        errorTitle: "Login error",
+        errorMessage: "Login failed. Please try again.",
+      },
+    
+      errors: {
+        invalidEmail: "The email address is invalid.",
+        userNotFound: "No account was found with this email.",
+        wrongPassword: "The password is incorrect.",
+        emailInUse: "This email is already registered.",
+        weakPassword: "The password is too weak.",
+        invalidCredential: "Invalid login credentials.",
+        missingPassword: "Please enter your password.",
+        tooManyRequests: "Too many attempts were made. Please try again later.",
+      },
+    }
   },
 } as const;

@@ -44,19 +44,60 @@ export default function LoginScreen() {
     };
   }, []);
 
+  const getAuthErrorMessage = (code?: string) => {
+    switch (code) {
+      case "auth/invalid-email":
+        return t("login.errors.invalidEmail");
+      case "auth/user-not-found":
+        return t("login.errors.userNotFound");
+      case "auth/wrong-password":
+        return t("login.errors.wrongPassword");
+      case "auth/email-already-in-use":
+        return t("login.errors.emailInUse");
+      case "auth/weak-password":
+        return t("login.errors.weakPassword");
+      case "auth/invalid-credential":
+        return t("login.errors.invalidCredential");
+      case "auth/missing-password":
+        return t("login.errors.missingPassword");
+      case "auth/too-many-requests":
+        return t("login.errors.tooManyRequests");
+      default:
+        return t("login.alerts.errorMessage");
+    }
+  };
+
   const handleSubmit = async () => {
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      Alert.alert(
+        t("login.alerts.errorTitle"),
+        t("login.errors.invalidEmail")
+      );
+      return;
+    }
+
+    if (!password.trim()) {
+      Alert.alert(
+        t("login.alerts.errorTitle"),
+        t("login.errors.missingPassword")
+      );
+      return;
+    }
+
     try {
       setSubmitting(true);
 
       if (mode === "login") {
-        await login(email.trim(), password);
+        await login(trimmedEmail, password);
       } else {
-        await register(email.trim(), password);
+        await register(trimmedEmail, password);
       }
     } catch (error: any) {
       Alert.alert(
         t("login.alerts.errorTitle"),
-        error?.message ?? t("login.alerts.errorMessage")
+        getAuthErrorMessage(error?.code)
       );
     } finally {
       setSubmitting(false);
@@ -80,7 +121,7 @@ export default function LoginScreen() {
               <View className="flex-row items-end justify-center">
                 <Image
                   source={require("../../assets/chicken_log2.png")}
-                  className={keyboardVisible ? "mb-2 h-10 w-10" : "h-16 w-16 mt-48"}
+                  className={keyboardVisible ? "mb-2 h-10 w-10" : "mt-48 h-16 w-16"}
                   resizeMode="contain"
                 />
                 <Image
@@ -90,7 +131,7 @@ export default function LoginScreen() {
                 />
                 <Image
                   source={require("../../assets/chicken_log.png")}
-                  className={keyboardVisible ? "mb-2 h-16 w-16" : "h-32 w-32 mt-56"}
+                  className={keyboardVisible ? "mb-2 h-16 w-16" : "mt-56 h-32 w-32"}
                   resizeMode="contain"
                 />
               </View>
