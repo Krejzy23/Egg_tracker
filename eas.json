@@ -15,6 +15,12 @@
         "buildType": "apk"
       }
     },
+    "adi": { 
+      "extends": "production", 
+      "android": { 
+        "buildType": "apk" 
+      } 
+    },
 
     "production": {
       "autoIncrement": true
