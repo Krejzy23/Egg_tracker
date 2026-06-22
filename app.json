@@ -1,0 +1,75 @@
+{
+  "expo": {
+    "name": "egg-tracker",
+    "slug": "egg-tracker",
+    "version": "1.4.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aleskrejzl.eggtracker",
+      "infoPlist": {
+        "CFBundleLocalizations": [
+          "cs",
+          "en",
+          "cs",
+          "en"
+        ],
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.aleskrejzl.eggtracker",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-sharing",
+      "expo-asset",
+      "expo-font",
+      [
+        "expo-localization",
+        {
+          "supportedLocales": {
+            "ios": [
+              "cs",
+              "en"
+            ],
+            "android": [
+              "cs",
+              "en"
+            ]
+          }
+        }
+      ],
+      "@react-native-community/datetimepicker"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "bc0e61a5-aeb0-4e85-a147-67ff2dcddd66"
+      }
+    },
+    "owner": "krejzy23"
+  }
+}
