@@ -73,7 +73,7 @@ Mobile app for tracking egg production from backyard chickens.
 
 - APP is still in development but you can test it by download .apk on your android
 - 📲 ANDROID APK Test Link
-- v.1.3.0 - https://expo.dev/accounts/krejzy23/projects/egg-tracker/builds/440b4c06-bb20-4c9e-93e4-2f2c8c31c0c7
+- v.1.3.0 - https://expo.dev/accounts/krejzy23/projects/egg-tracker/builds/502065ee-d188-450c-a1d6-fd266cabe258
 
 - Google Play Test Link
 -  v4 - https://play.google.com/store/apps/details?id=com.aleskrejzl.eggtracker
